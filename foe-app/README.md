@@ -1,6 +1,7 @@
 # FoE LG Calculator
 
 Game: https://de.forgeofempires.com/
+
 Calc Maz for multiple LGs.
 
 
