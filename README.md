@@ -5,6 +5,6 @@
 
 This repo contains all ReactJS projects.
 
-File       | Disciption
+Project    | Disciption
 -----      | -----
 FoE-App    | Calc multiple LGs
