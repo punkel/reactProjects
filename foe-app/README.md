@@ -1,7 +1,6 @@
 # FoE LG Calculator
 
 Game: https://de.forgeofempires.com/
-
 Calc Maz for multiple LGs.
 
 
@@ -11,4 +10,4 @@ Calc Maz for multiple LGs.
 
 optional:
 - Alert for Cookies
-- other Cookiehandling for mobile device
+- other Cookiehandling

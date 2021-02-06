@@ -2,6 +2,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
+
 // own imports
 import { addLGList, addLG, changeNick } from './store/store.js'
 import ListLGs from './comp/ListLGs.js';
@@ -9,32 +12,17 @@ import ListLGs from './comp/ListLGs.js';
 // database
 import {LG} from './source/gdz_db.js'
 
-function saveData(lgs, nick){
-    // save LGs
-
-    var time = new Date();
-    time.setTime(time.getTime() + (30*24*60*60*1000));
-    var save = "";
-    if(lgs.length > 0){
-        save = "lgs:";
-        for(var L of lgs){
-            save = save.concat(L.name,",",L.stufe.toString(),",",L.faktor.toString(),":")
-        }
-    }
-    save = save.concat(nick)
-    var cooksave = save + ";" +
-                "expires=" + time.toUTCString() + ";" +
-                "path=/";
-    //console.log("Unmount",cooksave);
-    document.cookie = cooksave;
-}
+const saveLGCookieName = 'LGs';
+const saveNickCookieName = 'name';
 
 class App extends React.Component {
+
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+
     constructor(props){
-        super(props)
-        this.state= {
-            loaded: false
-        }
+        super(props);
         this.clickHandler = this.clickHandler.bind(this)
         this.changeHandler = this.changeHandler.bind(this)
     }
@@ -56,25 +44,25 @@ class App extends React.Component {
 
         // load LGs and nick from cookies
 
-        var cookload = decodeURIComponent(document.cookie).split(':');
-        var tmp2 = {};
-
-        if(cookload[0].length===3){
-            for(var i=1;i<cookload.length-1;i++){
-                tmp2=cookload[i].split(',');
+        var loadedLgs = this.props.cookies.get(saveLGCookieName);
+        if(loadedLgs != null){
+            var tmpI = "";
+            for(tmpI of loadedLgs) {
                 this.props.addLG({
-                    name: tmp2[0],
-                    stufe: (tmp2[1] === "NaN" ? 10 : parseInt(tmp2[1])),
-                    faktor: (tmp2[2] === "NaN" ? 1.9 : parseFloat(tmp2[2]))
+                    name:tmpI.name,
+                    stufe:tmpI.stufe,
+                    faktor:tmpI.faktor
                 })
             }
         }
 
-        this.props.changeNick(cookload[cookload.length-1]);
+        this.props.changeNick(this.props.cookies.get(saveNickCookieName));
+    }
 
-        this.setState({
-            loaded: true
-        })
+    componentDidUpdate(nextProps){
+        if(nextProps.lgs !== this.props.lgs){
+            this.props.cookies.set(saveLGCookieName, this.props.lgs, { path: '/', secure: true });
+        }
     }
 
     clickHandler(event){
@@ -87,14 +75,12 @@ class App extends React.Component {
     changeHandler(event){
         var {id, value} = event.target;
         if( id === "Nick" ){
+            this.props.cookies.set(saveNickCookieName, value, { path: '/', secure: true  });
             this.props.changeNick(value)
         }
     }
 
     render(){
-        if(this.state.loaded){
-            saveData(this.props.lgs, this.props.nick)
-        }
         return (
             <div>
                 <button
@@ -122,7 +108,9 @@ function updateProps(state) {
     }
 }
 
-export default connect(
-    updateProps,
-    { addLGList, addLG, changeNick }
-)(App);
+export default withCookies(
+    connect(
+        updateProps,
+        { addLGList, addLG, changeNick }
+    )(App)
+);
