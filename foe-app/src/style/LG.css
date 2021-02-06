@@ -1,3 +1,77 @@
+.containerList {
+    display: grid;
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 10px;
+    row-gap: 10px;
+}
+
+
+@media only screen and (max-width: 799px){
+    .containerList {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media only screen and (min-width:800px){
+    .containerList {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (min-width:1200px){
+    .containerList {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (min-width:1600px){
+    .containerList {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
 .LG {
+    padding-top: 10px;
+    margin-bottom: 10px;
     border: solid;
+    width: 390px;
+    text-align: center;
+}
+
+.formLG select {
+    width: 60%;
+    margin-right: 40px;
+    display: inline;
+}
+
+.inputOutputText {
+    text-align: left;
+    width: 95%;
+}
+
+.formLGSetting input {
+    display: inline;
+    width: 250px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.formLGSetting button {
+    font-size: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.formLGCheckbox {
+    margin-right: 30px;
+}
+
+.formLGTable table {
+    width: 99%;
+    text-align: center;
+}
+
+.mb-3 {
+    text-align: -moz-center;
 }

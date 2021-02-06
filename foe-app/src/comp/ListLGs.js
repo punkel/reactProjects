@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
-import LGMaz from './LGMaz.js'
-import { getLGList } from '../store/store.js'
+import LGMaz from './LGMaz.js';
+import { getLGList } from '../store/store.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../style/LG.css';
 
 function ListLGs (props){
     var lgs = []
@@ -19,14 +21,13 @@ function ListLGs (props){
         })
     }
     return (
-        <div>
+        <div className="containerList">
             {lgs}
         </div>
     )
 }
 
 function mapStateToProps (state){
-    //console.log("mapStateToProps", state);
     return {
         lgs: state.lgs,
     }

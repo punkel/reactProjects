@@ -6,8 +6,6 @@ Calc Maz for multiple LGs.
 
 ### ToDos
 
-- Style
-
 optional:
 - Alert for Cookies
-- other Cookiehandling
+- Cookiehandling for mobile devices

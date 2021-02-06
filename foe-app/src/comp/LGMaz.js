@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // style imports
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import '../style/LG.css';
 
 // own imports
@@ -244,7 +244,17 @@ class LGMaz extends React.Component {
         // create checkboxs
         var checkbox = this.state.ausgabe.map(a => {
             return(
-                <label key={a.name} ><input type="checkbox" onChange={this.changeHandler} id={a.name} checked={a.show}/>{a.name} </label>
+                    <label
+                        className="form-check-label formLGCheckbox"
+                        key={a.name} >
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            onChange={this.changeHandler}
+                            id={a.name}
+                            checked={a.show} />
+                        {a.name}
+                    </label>
             )
         })
 
@@ -260,7 +270,8 @@ class LGMaz extends React.Component {
 
         // creat Output outText
         // nick LGname P?(?) ...
-        var outTextStd = this.props.nick + " " + this.state.name;
+        var outTextStd = (this.props.nick ? this.props.nick + " " : "")
+        outTextStd += this.state.name
         var outTextP   = [];
         for(var i=5;i>0;i--){
             if(this.state.ausgabe[i].show)
@@ -271,91 +282,104 @@ class LGMaz extends React.Component {
         // render method
         return (
             <div className="LG" >
-                <form>
-                    <label>LG: </label>
+                <form className="formLG form-group mb-3">
                     <select
+                        className="form-control"
                         onChange={this.changeHandler}
                         value={this.state.name}
                         id="LG_Name">
                         {name_list}
                     </select>
                     <button
+                        className="btn btn-secondary"
                         type="button"
                         onClick={this.clickHandler}
                         id="delLG"
                         >remove LG</button>
                     <br />
                     <br />
-                    <label>Stufe: </label>
-                    <input
-                        id="LG_Stufe"
-                        type="text"
-                        onChange={this.changeHandler}
-                        value={this.state.showStufe}
-                        onBlur={this.changeHandler}
-                        onKeyUp={this.changeHandler}
-                    />
-                    <button
-                        onClick={this.clickHandler}
-                        id="stufe"
-                        type="button">
-                        +
-                    </button>
-                    <button
-                        onClick={this.clickHandler}
-                        id="stufe"
-                        type="button">
-                        -
-                    </button>
-                    <br />
-                    <label>Faktor: </label>
-                    <input
-                        id="faktor"
-                        type="text"
-                        onChange={this.changeHandler}
-                        value={this.state.showFaktor}
-                        onBlur={this.changeHandler}
-                        onKeyUp={this.changeHandler}
+                    <div class="mb-3 formLGSetting">
+                        <label>Stufe: </label>
+                        <br />
+                        <button
+                            className="btn btn-secondary"
+                            onClick={this.clickHandler}
+                            id="stufe"
+                            type="button">
+                            +
+                        </button>
+                        <input
+                            className="form-control"
+                            id="LG_Stufe"
+                            type="text"
+                            onChange={this.changeHandler}
+                            value={this.state.showStufe}
+                            onBlur={this.changeHandler}
+                            onKeyUp={this.changeHandler}
                         />
-                    <button
-                        onClick={this.clickHandler}
-                        id="faktor"
-                        type="button">
-                        +
-                    </button>
-                    <button
-                        onClick={this.clickHandler}
-                        id="faktor"
-                        type="button">
-                        -
-                    </button>
-                    <br />
-                    <br />
-                    FP Gesamt: {this.state.ausgabe[0].earn} | Eigenanteil Gesamt: {this.state.ausgabe[0].cost}
-                    <br />
-                    <table>
-                        <thead>
+                        <button
+                            className="btn btn-secondary"
+                            onClick={this.clickHandler}
+                            id="stufe"
+                            type="button">
+                            -
+                        </button>
+                    </div>
+                    <div class="mb-3 formLGSetting">
+                        <label>Faktor: </label>
+                        <br />
+                        <button
+                            className="btn btn-secondary"
+                            onClick={this.clickHandler}
+                            id="faktor"
+                            type="button">
+                            +
+                        </button>
+                        <input
+                            className="formLGSetting  form-control"
+                            id="faktor"
+                            type="text"
+                            onChange={this.changeHandler}
+                            value={this.state.showFaktor}
+                            onBlur={this.changeHandler}
+                            onKeyUp={this.changeHandler}
+                            />
+                        <button
+                            className="btn btn-secondary"
+                            onClick={this.clickHandler}
+                            id="faktor"
+                            type="button">
+                            -
+                        </button>
+                    </div>
+                    <div className="formLGTable">
+                        FP Gesamt: {this.state.ausgabe[0].earn} | Eigenanteil Gesamt: {this.state.ausgabe[0].cost}
+                        <br />
+                        <br />
+                        <table>
                             <tr>
                                 <th>Kosten</th>
                                 <th>Eigenanteil</th>
                                 <th>Eigenanteil gesamt</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {calcs}
-                        </tbody>
-                    </table>
-                    <br />
-                    <label>Output: </label>
-                    <br />
-                    <input
-                        type="text"
-                        value={outText}
-                        onChange={()=>{}}
-                        />
-                    <br />
-                    <br />
-                    {checkbox}
+                            <tbody>
+                                {calcs}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="mb-3 inputOutputText">
+                        <label className="form-label">Output: </label>
+                        <br />
+                        <input
+                            className="form-control"
+                            type="text"
+                            value={outText}
+                            onChange={()=>{}}
+                            />
+                    </div>
+                    <div className="form-check">
+                        {checkbox}
+                    </div>
                 </form>
             </div>
     )}

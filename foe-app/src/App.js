@@ -9,6 +9,10 @@ import { withCookies, Cookies } from 'react-cookie';
 import { addLGList, addLG, changeNick } from './store/store.js'
 import ListLGs from './comp/ListLGs.js';
 
+// styles
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './style/App.css';
+
 // database
 import {LG} from './source/gdz_db.js'
 
@@ -83,18 +87,22 @@ class App extends React.Component {
     render(){
         return (
             <div>
-                <button
-                    id="1"
-                    onClick={this.clickHandler}>
-                    Add LG
-                </button>
-                <label> Nick: </label>
-                <input
-                    type="text"
-                    id="Nick"
-                    onChange={this.changeHandler}
-                    value={this.props.nick}
-                    />
+                <div className="defaultSettings">
+                    <button
+                        type="button"
+                        className="btn btn-secondary"
+                        id="1"
+                        onClick={this.clickHandler}>
+                        Add LG
+                    </button>
+                    <label> Nick: </label>
+                    <input
+                        type="text"
+                        id="Nick"
+                        onChange={this.changeHandler}
+                        value={this.props.nick}
+                        />
+                </div>
                 <ListLGs />
             </div>
         )
